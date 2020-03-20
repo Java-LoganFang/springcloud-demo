@@ -5,4 +5,8 @@ node {
             checkout([$class: 'GitSCM', branches: [[name: "*/${branch}"]], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[url: "${git_url}"]]])
 
     }
+
+    stage('安装jar包'){
+                    sh "mvn -f ${project_name} clean package"
+            }
 }
