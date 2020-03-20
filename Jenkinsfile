@@ -7,8 +7,9 @@ node {
     }
 
     stage('安装jar包'){
-                    sh "cd Itoken/${project_name}"
+                    //sh "cd Itoken/${project_name}"
                     sh "ls"
-                    sh "mvn  clean package"
+                    sh "mvn -f ./Itoken/${project_name}   clean  package
+"
             }
 }
