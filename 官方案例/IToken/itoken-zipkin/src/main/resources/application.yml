@@ -1,0 +1,15 @@
+spring:
+  cloud:
+    config:
+      uri: http://localhost:8888
+      name: itoken-zipkin
+      label: master
+      profile: dev
+  main:
+    allow-bean-definition-overriding: true
+    # 当bean重复定义时允许相同key情况下beanDefinition实例的覆盖
+    # 否则报错：The bean 'characterEncodingFilter'
+    # defined in class path resource [zipkin/autoconfigure/ui/ZipkinUiAutoConfiguration.class]
+    # could not be registered
+    # A bean with that name has already been defined in class path resource
+    # [org/springframework/boot/autoconfigure/web/servlet/HttpEncodingAutoConfiguration.class] and overriding is disabled
