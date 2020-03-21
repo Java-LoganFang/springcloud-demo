@@ -4,4 +4,5 @@ ARG JAVA_FILE
 COPY ${JAVA_FILE} app.jar
 EXPOSE 10086
 CMD echo ${JAVA_FILE}
+
 ENTRYPOINT ["java","-jar","/app.jar"]
