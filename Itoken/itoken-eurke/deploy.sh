@@ -1,19 +1,19 @@
 #!/bin/sh
 #接收外部参数
-harbor_url = $1
-harbor_project_name = $2
+harbor_url=$1
+harbor_project_name=$2
 project_name=$3
 tag=$4
 port=$5
 
-imageName = $harbor_url/$harbor_project_name/$project_name:$tag
+imageName=$harbor_url/$harbor_project_name/$project_name:$tag
 
 echo "$imageName"
 
 #查询容器是否存在，存在就删除
-containerId = `docker ps -a | gerp -w ${project_name}:${tag} | awk '{print $1}'`
+containerId=$(docker ps -a | gerp -w ${project_name}:${tag} | awk '{print $1}')
 
-if ["$containerId" != ""]; then
+if [ "$containerId" != "" ]; then
   #停掉容器
   docker stop $containerId
 
@@ -23,8 +23,8 @@ if ["$containerId" != ""]; then
 
 fi
 #查询容器是否存在，存在就删除
-imageId =`docker images | grep -w $project_name | awk '{print $3}'`
-if ["$imageId" != ""] ; then
+imageId=$(docker images | grep -w $project_name | awk '{print $3}')
+if [ "$imageId" != "" ]; then
   #删除镜像
   docker rmi -f $imageId
   echo "成功删除镜像"
