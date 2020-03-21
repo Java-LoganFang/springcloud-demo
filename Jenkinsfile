@@ -13,4 +13,11 @@ node {
 
                     sh "mvn -f ./Itoken/${project_name}   clean  package   dockerfile:build"
             }
+    stage('制作镜像'){
+
+                        echo "开始制作镜像"
+
+
+                        sh "mvn -f ./Itoken/${project_name}  dockerfile:build"
+                }
 }
