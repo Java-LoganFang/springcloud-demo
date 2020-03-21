@@ -10,6 +10,7 @@ node {
 
                     echo "开始安装jar包"
                     sh "ls"
+                    sh "mvn clean install -DskipTests"
                     sh "mvn -f ./Itoken/${project_name}   clean  package   dockerfile:build"
             }
 }
