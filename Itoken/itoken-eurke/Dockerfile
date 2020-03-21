@@ -5,4 +5,4 @@ COPY ${JAVA_FILE} app.jar
 EXPOSE 10086
 CMD echo ${JAVA_FILE}
 
-ENTRYPOINT ["java","-jar","/app.jar"]
+ENTRYPOINT ["echo","${JAVA_FILE}","java","-jar","/app.jar"]
