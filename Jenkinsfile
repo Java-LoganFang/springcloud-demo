@@ -36,11 +36,11 @@ node {
                             echo "镜像打标签"
 
                             //定义镜像名称
-                            def imageName = "${project_name}:${tag}"
+                            def imageName = "${project.artifactId}:${tag}"
 
                             //镜像打标签
                             sh "docker tag ${imageName} ${harbor_url}/${harbor_project}/${imageName}"
-                            sh "mvn -f ./Itoken/${project_name}  dockerfile:build"
+
                             sh "docker login -u admin -p 123456 ${harbor_url}"
                             sh "docker push ${harbor_url}/${harbor_project}/${imageName}"
                             sh "echo 镜像上传成功"
