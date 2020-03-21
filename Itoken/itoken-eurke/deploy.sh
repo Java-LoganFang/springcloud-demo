@@ -32,9 +32,11 @@ fi
 
 #登录Harbor
 docker login -u admin -p 123456 $harbor_url
+echo "登录成功"
 
 #下载镜像
 docker pull $imageName
+echo "下载成功"
 
 #启动容器
 docker run -di -p $port:$port $imageName
