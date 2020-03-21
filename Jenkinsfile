@@ -49,7 +49,7 @@ node {
     stage('镜像发布'){
 
                                 echo "开始发布镜像"
-                                sshPublisher(publishers: [sshPublisherDesc(configName: 'zcm 101.200.91.110', transfers: [sshTransfer(cleanRemote: false, excludes: '',execCommand: "/root/shell/deploy.sh $harbor_url $harbor_project $project_name $tag",execTimeout: 120000, flatten: false, makeEmptyDirs: false, noDefaultExcludes: false, patternSeparator: '[, ]+', remoteDirectory: '', remoteDirectorySDF: false, removePrefix: '', sourceFiles: '')], usePromotionTimestamp: false, useWorkspaceInPromotion: false, verbose: false)])
+                                sshPublisher(publishers: [sshPublisherDesc(configName: 'zcm 101.200.91.110', transfers: [sshTransfer(cleanRemote: false, excludes: '',execCommand: "/root/shell/deploy.sh $harbor_url $harbor_project $project_name $tag $port",execTimeout: 120000, flatten: false, makeEmptyDirs: false, noDefaultExcludes: false, patternSeparator: '[, ]+', remoteDirectory: '', remoteDirectorySDF: false, removePrefix: '', sourceFiles: '')], usePromotionTimestamp: false, useWorkspaceInPromotion: false, verbose: false)])
 
                         }
 

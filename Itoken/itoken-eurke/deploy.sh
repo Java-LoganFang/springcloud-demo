@@ -39,6 +39,8 @@ docker pull $imageName
 echo "下载成功"
 
 #启动容器
+echo "$port"
+echo "$imageName"
 docker run -di -p $port:$port $imageName
 
 echo "容器启动成功"
