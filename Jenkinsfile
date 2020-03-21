@@ -36,7 +36,7 @@ node {
                             echo "镜像打标签"
 
                             //定义镜像名称
-                            def imageName = "${project.artifactId}:${tag}"
+                            def imageName = "${project_name}:${tag}"
 
                             //镜像打标签
                             sh "docker tag ${imageName} ${harbor_url}/${harbor_project}/${imageName}"
