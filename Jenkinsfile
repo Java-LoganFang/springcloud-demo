@@ -14,44 +14,6 @@ node {
 
     }
 
-    stage('安装jar包'){
-
-                    echo "开始安装jar包"
-                    sh "ls"
-
-                    sh "mvn -f ./Itoken/${project_name}   clean  package "
-            }
-    stage('制作镜像'){
-
-                        echo "开始制作镜像"
-
-
-                        sh "mvn -f ./Itoken/${project_name}  dockerfile:build"
-                }
-
-
-
-    stage('镜像上传'){
-
-                            echo "镜像打标签"
-
-                            //定义镜像名称
-                            def imageName = "${project_name}:${tag}"
-
-                            //镜像打标签
-                            sh "docker tag ${imageName} ${harbor_url}/${harbor_project}/${imageName}"
-
-                            sh "docker login -u admin -p 123456 ${harbor_url}"
-                            sh "docker push ${harbor_url}/${harbor_project}/${imageName}"
-                            sh "echo 镜像上传成功"
-                    }
-
-    stage('镜像发布'){
-
-                                echo "开始发布镜像"
-                                sshPublisher(publishers: [sshPublisherDesc(configName: 'zcm 101.200.91.110', transfers: [sshTransfer(cleanRemote: false, excludes: '',execCommand: "/root/shell/deploy.sh $harbor_url $harbor_project $project_name $tag $port",execTimeout: 120000, flatten: false, makeEmptyDirs: false, noDefaultExcludes: false, patternSeparator: '[, ]+', remoteDirectory: '', remoteDirectorySDF: false, removePrefix: '', sourceFiles: '')], usePromotionTimestamp: false, useWorkspaceInPromotion: false, verbose: false)])
-
-                        }
 
 
 
