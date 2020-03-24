@@ -29,11 +29,12 @@ spec:
         labels:
           app: eureka
       spec:
-        imagePullSecrets:
-          - name: $SECRET_NAME
+        #imagePullSecrets:
+          #- name: $SECRET_NAME
         containers:
           - name: eureka
-            image: $IMAGE_NAME
+            #image: $IMAGE_NAME
+            image: nginx
             ports:
               - containerPort: 10086
   podManageementPolicy: "Parallel"
