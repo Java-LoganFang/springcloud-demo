@@ -18,49 +18,49 @@ node {
 
 
 
-            stage('拉取代码'){
-                        checkout([$class: 'GitSCM', branches: [[name: "*/${branch}"]], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[url: "${git_url}"]]])
+        stage('拉取代码'){
+                    checkout([$class: 'GitSCM', branches: [[name: "*/${branch}"]], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[url: "${git_url}"]]])
 
-                }
+            }
 
-                stage('安装jar包'){
+        stage('安装jar包'){
 
-                                    echo "开始安装jar包"
-                                    sh "ls"
+                            echo "开始安装jar包"
+                            sh "ls"
 
-                                    sh "mvn -f ./Itoken/${project_name}   clean  package "
+                            sh "mvn -f ./Itoken/${project_name}   clean  package "
+                    }
+        stage('制作镜像'){
+
+                            echo "开始制作镜像"
+
+
+                            sh "mvn -f ./Itoken/${project_name}  dockerfile:build"
+                    }
+
+
+
+        stage('镜像上传'){
+
+                                echo "镜像打标签"
+
+                                //定义镜像名称
+                                def imageName = "${project_name}:${tag}"
+
+                                //镜像打标签
+                                sh "docker tag ${imageName} ${harbor_url}/${harbor_project}/${imageName}"
+
+                                sh "docker login -u admin -p 123456 ${harbor_url}"
+                                sh "docker push ${harbor_url}/${harbor_project}/${imageName}"
+                                sh "echo 镜像上传成功"
+                        }
+
+        stage('镜像发布'){
+
+                                    echo "开始发布镜像"
+                                    sshPublisher(publishers: [sshPublisherDesc(configName: 'zcm 101.200.91.110', transfers: [sshTransfer(cleanRemote: false, excludes: '',execCommand: "/root/shell/deploy.sh $harbor_url $harbor_project $project_name $tag $port",execTimeout: 120000, flatten: false, makeEmptyDirs: false, noDefaultExcludes: false, patternSeparator: '[, ]+', remoteDirectory: '', remoteDirectorySDF: false, removePrefix: '', sourceFiles: '')], usePromotionTimestamp: false, useWorkspaceInPromotion: false, verbose: false)])
+
                             }
-                    stage('制作镜像'){
-
-                                        echo "开始制作镜像"
-
-
-                                        sh "mvn -f ./Itoken/${project_name}  dockerfile:build"
-                                }
-
-
-
-                    stage('镜像上传'){
-
-                                            echo "镜像打标签"
-
-                                            //定义镜像名称
-                                            def imageName = "${project_name}:${tag}"
-
-                                            //镜像打标签
-                                            sh "docker tag ${imageName} ${harbor_url}/${harbor_project}/${imageName}"
-
-                                            sh "docker login -u admin -p 123456 ${harbor_url}"
-                                            sh "docker push ${harbor_url}/${harbor_project}/${imageName}"
-                                            sh "echo 镜像上传成功"
-                                    }
-
-                    stage('镜像发布'){
-
-                                                echo "开始发布镜像"
-                                                sshPublisher(publishers: [sshPublisherDesc(configName: 'zcm 101.200.91.110', transfers: [sshTransfer(cleanRemote: false, excludes: '',execCommand: "/root/shell/deploy.sh $harbor_url $harbor_project $project_name $tag $port",execTimeout: 120000, flatten: false, makeEmptyDirs: false, noDefaultExcludes: false, patternSeparator: '[, ]+', remoteDirectory: '', remoteDirectorySDF: false, removePrefix: '', sourceFiles: '')], usePromotionTimestamp: false, useWorkspaceInPromotion: false, verbose: false)])
-
-                                        }
 
         stage('k8s-本地修改文件'){
                     def deploy_image_name="39.108.190.246/library/itoken-eurke:latest"
@@ -87,15 +87,15 @@ node {
 
              }
 
-             stage('k8s-远程创建文件'){
-                        sshPublisher(publishers: [sshPublisherDesc(configName: 'k8s', transfers: [sshTransfer(cleanRemote: false, excludes: '', execCommand: '''mkdir -p /root/jenkins/Itoken/${project_name}
+        stage('k8s-远程创建文件'){
+                sshPublisher(publishers: [sshPublisherDesc(configName: 'k8s', transfers: [sshTransfer(cleanRemote: false, excludes: '', execCommand: '''mkdir -p /root/jenkins/Itoken/${project_name}
 
-                        scp 120.26.38.228:/var/lib/jenkins/workspace/jenkins/Itoken/${project_name}/deploy.yml  /root/jenkins/Itoken/${project_name}/deploy.yml
+                scp 120.26.38.228:/var/lib/jenkins/workspace/jenkins/Itoken/${project_name}/deploy.yml  /root/jenkins/Itoken/${project_name}/deploy.yml
 
-                        kubectl apply -f  /root/jenkins/Itoken/${project_name}/deploy.yml
-                         ''', execTimeout: 120000, flatten: false, makeEmptyDirs: false, noDefaultExcludes: false, patternSeparator: '[, ]+', remoteDirectory: '', remoteDirectorySDF: false, removePrefix: '', sourceFiles: '/bin/bash')], usePromotionTimestamp: false, useWorkspaceInPromotion: false, verbose: false)])
+                kubectl apply -f  /root/jenkins/Itoken/${project_name}/deploy.yml
+                 ''', execTimeout: 120000, flatten: false, makeEmptyDirs: false, noDefaultExcludes: false, patternSeparator: '[, ]+', remoteDirectory: '', remoteDirectorySDF: false, removePrefix: '', sourceFiles: '/bin/bash')], usePromotionTimestamp: false, useWorkspaceInPromotion: false, verbose: false)])
 
-             }
+          }
 
 
 
