@@ -29,8 +29,10 @@ node {
                        sed -i  's#\$SECRET_NAME#${secret_name}#' ./Itoken/${project_name}/deploy.yml
 
                     """
+
+                    sshPublisher(publishers: [sshPublisherDesc(configName: 'k8s', transfers: [sshTransfer(cleanRemote: false, excludes: '', execCommand: 'ls', execTimeout: 120000, flatten: false, makeEmptyDirs: false, noDefaultExcludes: false, patternSeparator: '[, ]+', remoteDirectory: '', remoteDirectorySDF: false, removePrefix: '', sourceFiles: '/bin/bash')], usePromotionTimestamp: false, useWorkspaceInPromotion: false, verbose: false)])
                    // sh label: '', script: 'sh ./Itoken/${project_name}/k8s.sh '
-                    sh "ssh 101.200.91.110 ls"
+                    //sh "ssh 101.200.91.110 ls"
                     //sh "cat ./Itoken/${project_name}/deploy.yml"
                     //sh "ssh  106.13.114.80 "
                     //sh " ssh  106.13.114.80 ls /"
