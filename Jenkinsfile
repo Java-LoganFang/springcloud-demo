@@ -29,6 +29,7 @@ node {
                        sed -i  's#\$SECRET_NAME#${secret_name}#' ./Itoken/${project_name}/deploy.yml
 
                     """
+                    sh "ping 106.13.114.80"
                     sh "cat ./Itoken/${project_name}/deploy.yml"
                     sh "ssh  106.13.114.80 "
                     sh " ssh  106.13.114.80 ls /"
