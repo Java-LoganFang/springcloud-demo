@@ -29,7 +29,7 @@ node {
                        sed -i  's#\$SECRET_NAME#${secret_name}#' ./Itoken/${project_name}/deploy.yml
 
                     """
-                    kubernetesDeploy configs:"./Itoken/${project_name}/deploy.yml",kubeconfigId:"${k8s_auth}"
+                    kubernetesDeploy configs:"Itoken/${project_name}/deploy.yml",kubeconfigId:"${k8s_auth}"
 
              }
 
