@@ -19,11 +19,11 @@ node {
                                 sh "cd ./Itoken"
                                 sh "ls"
                                 sh """
-                                   sed -i 's#\$IMAGE_NAME#${deploy_image_name}#' ${project_name}/deploy.yml
-                                   sed -i  's#\$SECRET_NAME#${secret_name}#' ${project_name}/deploy.yml
+                                   sed -i 's#\$IMAGE_NAME#${deploy_image_name}#' ./Itoken${project_name}/deploy.yml
+                                   sed -i  's#\$SECRET_NAME#${secret_name}#' ./Itoken${project_name}/deploy.yml
 
                                 """
-                                kubernetesDeploy configs:"${project_name}/deploy.yml",kubeconfigId:"${k8s_auth}"
+                                kubernetesDeploy configs:"./Itoken${project_name}/deploy.yml",kubeconfigId:"${k8s_auth}"
 
                         }
 
