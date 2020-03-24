@@ -24,11 +24,7 @@ node {
                     sh "cd ./Itoken"
                     sh "ls"
                     sh "ls ./Itoken/${project_name}"
-                    sh """
-                       sed -i 's#\$IMAGE_NAME#${deploy_image_name}#' ./Itoken/${project_name}/deploy.yml
-                       sed -i  's#\$SECRET_NAME#${secret_name}#' ./Itoken/${project_name}/deploy.yml
 
-                    """
                     sh "cat ./Itoken/${project_name}/deploy.yml"
                     kubernetesDeploy configs:"Itoken/${project_name}/deploy.yml",kubeconfigId:"${k8s_auth}"
 
