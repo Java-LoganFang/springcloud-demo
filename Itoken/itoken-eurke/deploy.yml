@@ -15,7 +15,7 @@ spec:
     app: eureka
 ---
 apiVersion: apps/v1
-kind: StatefulSet
+kind: Deployment
 metadata:
   name: eureka
 spec:
