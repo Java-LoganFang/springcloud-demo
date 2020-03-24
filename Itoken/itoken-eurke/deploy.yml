@@ -24,7 +24,7 @@ spec:
   selector:
     matchLabels:
       app: eureka
-    template:
+  template:
       metadata:
         labels:
           app: eureka
@@ -36,6 +36,6 @@ spec:
             image: $IMAGE_NAME
             ports:
               - containerPort: 10086
-    podManageementPolicy: "Parallel"
+  podManageementPolicy: "Parallel"
 
 
