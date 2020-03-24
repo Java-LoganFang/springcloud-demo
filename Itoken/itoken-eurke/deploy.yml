@@ -35,6 +35,6 @@ spec:
             image: $IMAGE_NAME
             ports:
               - containerPort: 10086
-  podManageementPolicy: "Parallel"
+
 
 
