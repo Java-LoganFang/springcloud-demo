@@ -18,6 +18,7 @@ node {
                                 def deploy_image_name="39.108.190.246/library/itoken-eurke:latest"
                                 sh "cd ./Itoken"
                                 sh "ls"
+                                sh "ls ./Itoken/${project_name}"
                                 sh """
                                    sed -i 's#\$IMAGE_NAME#${deploy_image_name}#' ./Itoken/${project_name}/deploy.yml
                                    sed -i  's#\$SECRET_NAME#${secret_name}#' ./Itoken/${project_name}/deploy.yml
