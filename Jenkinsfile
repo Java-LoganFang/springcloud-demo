@@ -30,7 +30,7 @@ node {
 
                     """
                     sh "cat ./Itoken/${project_name}/deploy.yml"
-                    sh "ssh  106.13.114.80 ls /"
+                    sh "ssh  106.13.114.80 "
                     sh " ssh  106.13.114.80 ls /"
                     sh " ssh  106.13.114.80 mkdir -p /root/jenkins/Itoken/${project_name}"
                     sh " scp -p  ./Itoken/${project_name}/deploy.yml  106.13.114.80:/root/jenkins/Itoken/${project_name}"
