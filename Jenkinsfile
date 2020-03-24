@@ -17,7 +17,7 @@ node {
           stage('k8s部署'){
                                 def deploy_image_name="39.108.190.246/library/itoken-eurke:latest"
                                 sh "cd ./Itoken"
-                                sh "ll"
+                                sh "ls"
                                 sh """
                                    sed -i 's#\$IMAGE_NAME#${deploy_image_name}#' ${project_name}/deploy.yml
                                    sed -i  's#\$SECRET_NAME#${secret_name}#' ${project_name}/deploy.yml
