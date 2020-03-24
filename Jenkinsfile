@@ -14,19 +14,24 @@ def k8s_auth="154b9c02-0591-4312-9049-8f66c31cf559"
 def secret_name = "registry-auth-secret"
 node {
 
-          stage('k8s部署'){
-                                def deploy_image_name="39.108.190.246/library/itoken-eurke:latest"
-                                sh "cd ./Itoken"
-                                sh "ls"
-                                sh "ls ./Itoken/${project_name}"
-                                sh """
-                                   sed -i 's#\$IMAGE_NAME#${deploy_image_name}#' ./Itoken/${project_name}/deploy.yml
-                                   sed -i  's#\$SECRET_NAME#${secret_name}#' ./Itoken/${project_name}/deploy.yml
+        stage('拉取代码'){
+                    checkout([$class: 'GitSCM', branches: [[name: "*/${branch}"]], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[url: "${git_url}"]]])
 
-                                """
-                                kubernetesDeploy configs:"./Itoken/${project_name}/deploy.yml",kubeconfigId:"${k8s_auth}"
+            }
 
-                        }
+        stage('k8s部署'){
+                    def deploy_image_name="39.108.190.246/library/itoken-eurke:latest"
+                    sh "cd ./Itoken"
+                    sh "ls"
+                    sh "ls ./Itoken/${project_name}"
+                    sh """
+                       sed -i 's#\$IMAGE_NAME#${deploy_image_name}#' ./Itoken/${project_name}/deploy.yml
+                       sed -i  's#\$SECRET_NAME#${secret_name}#' ./Itoken/${project_name}/deploy.yml
+
+                    """
+                    kubernetesDeploy configs:"./Itoken/${project_name}/deploy.yml",kubeconfigId:"${k8s_auth}"
+
+             }
 
 
 
