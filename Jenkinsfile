@@ -19,7 +19,7 @@ node {
 
             }
 
-        stage('k8s部署'){
+        stage('k8s-本地修改文件'){
                     def deploy_image_name="39.108.190.246/library/itoken-eurke:latest"
                     sh "cd ./Itoken"
                     sh "ls"
@@ -30,14 +30,15 @@ node {
 
                     """
 
-                    sshPublisher(publishers: [sshPublisherDesc(configName: 'k8s', transfers: [sshTransfer(cleanRemote: false, excludes: '', execCommand: 'ls', execTimeout: 120000, flatten: false, makeEmptyDirs: false, noDefaultExcludes: false, patternSeparator: '[, ]+', remoteDirectory: '', remoteDirectorySDF: false, removePrefix: '', sourceFiles: '/bin/bash')], usePromotionTimestamp: false, useWorkspaceInPromotion: false, verbose: false)])
+                    //sshPublisher(publishers: [sshPublisherDesc(configName: 'k8s', transfers: [sshTransfer(cleanRemote: false, excludes: '', execCommand: 'ls', execTimeout: 120000, flatten: false, makeEmptyDirs: false, noDefaultExcludes: false, patternSeparator: '[, ]+', remoteDirectory: '', remoteDirectorySDF: false, removePrefix: '', sourceFiles: '/bin/bash')], usePromotionTimestamp: false, useWorkspaceInPromotion: false, verbose: false)])
                    // sh label: '', script: 'sh ./Itoken/${project_name}/k8s.sh '
                     //sh "ssh 101.200.91.110 ls"
-                    //sh "cat ./Itoken/${project_name}/deploy.yml"
+                    sh "cat ./Itoken/${project_name}/deploy.yml"
                     //sh "ssh  106.13.114.80 "
                     //sh " ssh  106.13.114.80 ls /"
+
+                    sh " scp -p  ./Itoken/${project_name}/deploy.yml  106.13.114.80:/root/jenkins/Itoken/${project_name}"
                     //sh " ssh  106.13.114.80 mkdir -p /root/jenkins/Itoken/${project_name}"
-                    //sh " scp -p  ./Itoken/${project_name}/deploy.yml  106.13.114.80:/root/jenkins/Itoken/${project_name}"
                     //sh " ssh  106.13.114.80 kubectl apply -f  /root/jenkins/Itoken/${project_name}/deploy.yml"
                     //kubernetesDeploy configs:"Itoken/${project_name}/deploy.yml",kubeconfigId:"${k8s_auth}"
 
