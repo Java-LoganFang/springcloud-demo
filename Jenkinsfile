@@ -35,6 +35,7 @@ node {
                             echo "开始制作镜像"
 
 
+
                             sh "mvn -f ./Itoken/${project_name}  dockerfile:build"
                     }
 
