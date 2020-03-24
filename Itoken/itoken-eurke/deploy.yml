@@ -1,0 +1,39 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: eureka
+  labels:
+    app: eureka
+spec:
+  type: NodePort
+  ports:
+    - port: 10086
+      name: eureka
+      targetPort: 10086
+  selector:
+    app: eureka
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: eureka
+spec:
+  serviceName: "eureka"
+  replicas: 1
+  selector:
+    matchLabels:
+      app: eureka
+    template:
+      metadata:
+        labels:
+          app: eureka
+      spec:
+        imagePullSecrets:
+          - name: $SECRET_NAME
+        containers:
+          - name: eureka
+            image: $IMAGE_NAME
+            ports:
+              - containerPort: 10086
+    podManageementPolicy: "Parallel"
