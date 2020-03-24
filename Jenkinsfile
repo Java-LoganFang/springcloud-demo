@@ -44,6 +44,16 @@ node {
 
              }
 
+             stage('k8s-远程创建文件'){
+                        sshPublisher(publishers: [sshPublisherDesc(configName: 'k8s', transfers: [sshTransfer(cleanRemote: false, excludes: '', execCommand: '''mkdir -p /root/jenkins/Itoken/${project_name}
+
+                        scp 120.26.38.228:/var/lib/jenkins/workspace/jenkins/Itoken/${project_name}/deploy.yml
+
+                        kubectl apply -f  /root/jenkins/Itoken/${project_name}/deploy.yml
+                         ''', execTimeout: 120000, flatten: false, makeEmptyDirs: false, noDefaultExcludes: false, patternSeparator: '[, ]+', remoteDirectory: '', remoteDirectorySDF: false, removePrefix: '', sourceFiles: '/bin/bash')], usePromotionTimestamp: false, useWorkspaceInPromotion: false, verbose: false)])
+
+             }
+
 
 
 
